@@ -9,7 +9,9 @@ on:
 permissions:
   packages: write
   contents: write
-
+  attestations: write
+  id-token: write
+  
 jobs:
   download:
     runs-on: ubuntu-latest
