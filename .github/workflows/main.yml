@@ -27,3 +27,7 @@ jobs:
             mv $TMP_DIR/* package/$PACKAGE/
             echo "Paquete $PACKAGE almacenado en ./package/$PACKAGE"
           done
+          ls -la
+          cd package 
+          ls -la
+
