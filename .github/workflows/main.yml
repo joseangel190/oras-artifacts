@@ -1,0 +1,22 @@
+name: Oras
+on: 
+  workflow_dispatch:
+    inputs:
+      package_name:
+        type: string
+        required: true
+        
+permissions:
+  packages: write
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: oras-project/setup-oras@v1
+      - name: Setup Oras
+        run: |
+          oras version
+          oras login ghcr.io -u github -p ${{ secrets.GITHUB_TOKEN }}
+      - name: download package
+        run: oras pull ghcr.io/${{ github.repository }}:${{ inputs.package_name }}
