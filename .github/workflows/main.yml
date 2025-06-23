@@ -16,4 +16,14 @@ jobs:
           oras version
           oras login ghcr.io -u github -p ${{ secrets.GH_TOKEN }}
       - name: download package
-        run: oras pull ghcr.io/${{ github.repository }}:${{ inputs.package_name }} && ls -la
+        run: |  # oras pull ghcr.io/${{ github.repository }}:${{ inputs.package_name }} && ls -la
+          IFS=',' read -ra PACKAGES <<< "${{ inputs.package_names }}"
+          mkdir -p package
+          for PACKAGE in "${PACKAGES[@]}"; do
+            echo "Descargando paquete: $PACKAGE"
+            TMP_DIR=$(mktemp -d)
+            oras pull ghcr.io/${{ github.repository }}:$PACKAGE -o $TMP_DIR
+            mkdir -p package/$PACKAGE
+            mv $TMP_DIR/* package/$PACKAGE/
+            echo "Paquete $PACKAGE almacenado en ./package/$PACKAGE"
+          done
