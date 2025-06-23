@@ -2,7 +2,7 @@ name: Oras
 on: 
   workflow_dispatch:
     inputs:
-      package_name:
+      package_names:
         type: string
         required: true
         
