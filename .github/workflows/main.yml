@@ -8,6 +8,7 @@ on:
         
 permissions:
   packages: write
+  contents: write
 
 jobs:
   download:
@@ -19,4 +20,4 @@ jobs:
           oras version
           oras login ghcr.io -u github -p ${{ secrets.GITHUB_TOKEN }}
       - name: download package
-        run: oras pull ghcr.io/${{ github.repository }}:${{ inputs.package_name }}
+        run: oras pull ghcr.io/${{ github.repository }}:${{ inputs.package_name }} && ls -la
